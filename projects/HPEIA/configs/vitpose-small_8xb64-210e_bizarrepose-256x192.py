@@ -3,7 +3,7 @@ _base_ = 'vitpose-small_8xb64-210e_humanart-256x192.py'
 # This line is to import your own modules.
 
 # base settings
-data_root = 'data/'
+data_root = '../data/'
 data_mode = 'topdown'
 
 # hooks
@@ -31,7 +31,7 @@ codec = dict(
 model = dict(
     backbone=dict(
         init_cfg=dict(_delete_=True, type='Kaiming'),
-        img_size=(192, 256),
+        img_size=(256, 192),
     ),
     init_cfg=dict(
         type='Pretrained',
@@ -76,13 +76,9 @@ test_dataloader = dict(
 
 # # evaluators
 val_evaluator = dict(
-    _delete_=True,
-    type='CocoMetric',
     ann_file=f'{data_root}bizarre_pose/bizarre_pose_dataset/preprocessed/ann_val.json'
 )
 test_evaluator = dict(
-    _delete_=True,
-    type='CocoMetric',
     ann_file=f'{data_root}bizarre_pose/bizarre_pose_dataset/preprocessed/ann_test.json'
 )
 

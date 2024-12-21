@@ -10,7 +10,7 @@ custom_imports = dict(
 )
 
 # base settings
-data_root = 'data/'
+data_root = '../data/'
 data_mode = 'topdown'
 
 # hooks
@@ -18,10 +18,16 @@ custom_hooks = []
 
 
 # dataset settings
-train_dataloader = dict(dataset=dict(type='HumanArt21CocoDataset'))
+train_dataloader = dict(
+    dataset=dict(
+        type='HumanArt21CocoDataset',
+        data_root=data_root,
+    )
+)
 val_dataloader = dict(
     dataset=dict(
         type='HumanArt21CocoDataset',
+        data_root=data_root,
         # overwrite 'bbox_file' to None to run on ground truth
         # overwrite 'bbox_file' to a customized file to run on customized bounding boxes
         # default to run validation & testing on given bboxes
@@ -38,7 +44,6 @@ model = dict(
 
 # evaluators
 val_evaluator = dict(
-    _delete_=True,
     type='HumanArt21Metric',
     ann_file=f'{data_root}HumanArt/annotations/validation_humanart.json'
 )

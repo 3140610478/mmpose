@@ -6,7 +6,7 @@ _base_ = 'mmpose::body_2d_keypoint/topdown_heatmap/humanart/' \
 custom_imports = dict(imports=[])
 
 # base settings
-data_root = 'data/'
+data_root = '../data/'
 data_mode = 'topdown'
 
 # hooks
@@ -14,10 +14,10 @@ custom_hooks = []
 
 
 # dataset settings
-train_dataloader = dict(dataset=dict(type='HumanArtDataset'))
+train_dataloader = dict(dataset=dict(data_root=data_root))
 val_dataloader = dict(
     dataset=dict(
-        type='HumanArtDataset',
+        data_root=data_root,
         # overwrite 'bbox_file' to None to run on ground truth
         # overwrite 'bbox_file' to a customized file to run on customized bounding boxes
         # default to run validation & testing on given bboxes
@@ -25,6 +25,12 @@ val_dataloader = dict(
     ),
 )
 test_dataloader = val_dataloader
+
+# evaluators
+val_evaluator = dict(
+    ann_file=f'{data_root}HumanArt/annotations/validation_humanart.json')
+test_evaluator = val_evaluator
+
 
 # model settings
 model = dict(
